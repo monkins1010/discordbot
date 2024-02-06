@@ -4,9 +4,29 @@ import { InteractionType, InteractionResponseType, InteractionResponseFlags } fr
 import { VerifyDiscordRequest, DiscordRequest } from './utils.js';
 import { checkDiscordUserExists, setDiscordUsers } from './src/database.js';
 import { getdeeplink } from './src/getdeeplink.js';
+import axios from 'axios';
 
 // Create and configure express app
 const app = express();
+
+const getTinyUrl = async (deepLinkUrl) => {
+
+    try {
+        const response = await axios.post('https://api.tinyurl.com/create', {
+            url: deepLinkUrl
+        }, {
+            headers: {
+                'Authorization': `Bearer ${process.env.TINYURLTOKEN}`
+            }
+        });
+
+        // Send the response from the TinyURL service back to the user
+        return response.data.data.tiny_url;
+    } catch (error) {
+        console.error(error);
+        throw new Error('Error creating TinyURL');
+    }
+};
 app.use(express.json({ verify: VerifyDiscordRequest(process.env.PUBLIC_KEY) }));
 
 app.post('/interactions', async function (req, res) {
@@ -35,17 +55,15 @@ app.post('/interactions', async function (req, res) {
 			}
 
 			setDiscordUsers(member.user.id);
-			//const deeplinkurl = await getdeeplink();
+			const deeplinkurl = await getdeeplink();
+			const tinyurl = await getTinyUrl(deeplinkurl);
 
-			const embeddedObject = templateEmbed;
+			let embeddedObject = templateEmbed(deeplinkurl, tinyurl);
 
-		//	embeddedObject.url = deeplinkurl;
-
-
-			return res.send({
+			res.send({
 				type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
 				data: {
-					embeds: [exampleEmbed] 
+					embeds: [embeddedObject] 
 				},
 			});
 		}
@@ -91,42 +109,25 @@ app.listen(3000, () => {
 	createCommand();
 });
 
-const templateEmbed = {
-	color: 0x0099ff,
-	title: 'Some title',
-	url: 'https://discord.js.org',
-	author: {
-		name: 'ValuID',
-		icon_url: 'https://valu.earth/img/logo.png',
-		url: 'https://valu.earth',
-	},
-	description: 'Please click on the link in a mobile device to open the Verus Mobile app and create a ValuID.',
-	thumbnail: {
-		url: 'https://valu.earth/img/logo.png'
-	},
-	timestamp: new Date().toISOString(),
-	footer: {
-		text: 'Sent from Valu',
-		icon_url: 'https://valu.earth/img/logo.png',
-	},
-};
-
-const exampleEmbed = {
-	color: 0x0099ff,
+const templateEmbed = (link, tinylink) =>  {
+	return {color: 0x0099ff,
 	title: 'Your ValuID Link',
-	url: 'https://discord.js.org',
+	url: tinylink,
 	author: {
 		name: 'Valu',
-		icon_url: 'https://pbs.twimg.com/profile_images/1499065754313887747/_YAZWd_X_400x400.jpg',
-		url: 'https://discord.js.org',
+		url: 'https://valu.earth',
 	},
-	description: 'Please click on the link in a mobile device to open the Verus Mobile app and create a ValuID. This will provision you a .ValuID@',
+	description: `Please click on the link in a mobile device to open the Verus Mobile app, or scan the QR code to create a ValuID@`,
 	thumbnail: {
 		url: 'https://pbs.twimg.com/profile_images/1499065754313887747/_YAZWd_X_400x400.jpg',
 	},
+	image: {
+		url: `https://chart.googleapis.com/chart?chs=400x400&cht=qr&chl=${link}`,
+	},
 	timestamp: new Date().toISOString(),
 	footer: {
 		text: 'Sent from Valu',
 		icon_url: 'https://pbs.twimg.com/profile_images/1499065754313887747/_YAZWd_X_400x400.jpg',
 	},
+	}
 };
