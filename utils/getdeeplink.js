@@ -49,7 +49,7 @@ const getdeeplink = async () => {
         ],
         provisioning_info: [
           new primitives.ProvisioningInfo(
-            `${PROVISIONING_URL}/provisionvaluid`,
+            `${PROVISIONING_URL}/provisionVerusId`,
             primitives.LOGIN_CONSENT_ID_PROVISIONING_WEBHOOK_VDXF_KEY.vdxfid
           ),
           new primitives.ProvisioningInfo(
