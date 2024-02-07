@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "ValuID bot",
   "main": "index.js",
-  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -12,19 +11,23 @@
   "dependencies": {
     "@bitgo/utxo-lib": "git+https://github.com/VerusCoin/BitGoJS.git#7c754d4a5920198d9fe6827d3e23bd5cf431f264",
     "axios": "^1.6.7",
-    "discord-interactions": "^3.2.0",
-    "discord.js": "^14.14.1",
-    "dotenv": "^16.4.1",
-    "verusid-ts-client": "git+https://github.com/VerusCoin/verusid-ts-client.git",
-    "verus-typescript-primitives": "https://github.com/VerusCoin/verus-typescript-primitives.git",
-    "verusd-rpc-ts-client": "git+https://github.com/VerusCoin/verusd-rpc-ts-client.git",
-    "uuid": "^9.0.0",
-    "express": "^4.17.1",
-    "express-session": "^1.17.1",
-    "express-ws": "^5.0.2",
     "body-parser": "^1.19.0",
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
-    "node-fetch": "^3.3.0"
+    "discord-interactions": "^3.2.0",
+    "discord.js": "^14.14.1",
+    "dotenv": "^16.4.1",
+    "express": "^4.17.1",
+    "express-session": "^1.17.1",
+    "express-ws": "^5.0.2",
+    "node-fetch": "^3.3.0",
+    "qr-image": "^3.2.0",
+    "uuid": "^9.0.0",
+    "verus-typescript-primitives": "https://github.com/VerusCoin/verus-typescript-primitives.git",
+    "verusd-rpc-ts-client": "git+https://github.com/VerusCoin/verusd-rpc-ts-client.git",
+    "verusid-ts-client": "git+https://github.com/VerusCoin/verusid-ts-client.git"
+  },
+  "devDependencies": {
+    "eslint": "^8.56.0"
   }
 }
