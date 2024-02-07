@@ -39,5 +39,5 @@ const templateEmbed = (pngname, tinylink) => {
 	.setThumbnail('https://pbs.twimg.com/profile_images/1499065754313887747/_YAZWd_X_400x400.jpg')
 	.setImage(`attachment://${pngname}`)
 	.setTimestamp()
-	.setFooter({ iconURL: 'https://pbs.twimg.com/profile_images/1499065754313887747/_YAZWd_X_400x400.jpg' })
+	.setFooter({ text: 'Sent from Valu', iconURL: 'https://pbs.twimg.com/profile_images/1499065754313887747/_YAZWd_X_400x400.jpg' })
 };
