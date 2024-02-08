@@ -4,7 +4,7 @@ const { I_ADDR_VERSION } = require('verus-typescript-primitives/dist/constants/v
 const axios = require('axios');
 
 const VERUS_RPC_NETWORK = process.env.TESTNET == 'true' ? process.env.TESTNET_VERUS_RPC_NETWORK : process.env.MAINNET_VERUS_RPC_NETWORK
-const VERUS_RPC_SYSTEM = process.env.TESTNET == 'true' ? "VRSCTEST" : "VRSC";
+const VERUS_RPC_SYSTEM = process.env.TESTNET == 'true' ? "VRSCTEST" : "i5w5MuNik5NtLcYmNzcvaoixooEebB6MGV";
 const VerusId = new VerusIdInterface(VERUS_RPC_SYSTEM, VERUS_RPC_NETWORK);
 
 function generateChallengeID(len = 20) {
