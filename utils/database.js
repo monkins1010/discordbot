@@ -53,8 +53,20 @@ function checkDiscordUserExists(user) {
   return discordUsers[user] ? true : false;
 }
 
+function deleteDiscordUser(user) {
+  let discordUsers = {};
+  if (fs.existsSync(DISCORD_USERS)) {
+    const data = fs.readFileSync(DISCORD_USERS, 'utf8');
+    discordUsers = JSON.parse(data);
+  }
+  delete discordUsers[user];
+  const data = JSON.stringify(discordUsers, null, 2);
+  fs.writeFileSync(DISCORD_USERS, data);
+}
+
 exports.getProcessedChallenges = getProcessedChallenges;
 exports.setProcessedChallenges = setProcessedChallenges;
 exports.getDiscordUsers = getDiscordUsers;
 exports.setDiscordUsers = setDiscordUsers;
 exports.checkDiscordUserExists = checkDiscordUserExists;
+exports.deleteDiscordUser = deleteDiscordUser;

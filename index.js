@@ -35,7 +35,9 @@ client.on(Events.InteractionCreate, async interaction => {
 	if (!command) {
 		console.error(`No command matching ${interaction.commandName} was found.`);
 		return;
-	} else if (interaction.guildId != "1180350488256987177"){
+	} 
+
+	if (interaction.guildId != "1180350488256987177" && interaction.guildId != "797382165490171914"){
 		console.error(`unallowed discord server`);
 		return;
 	}
